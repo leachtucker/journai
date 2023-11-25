@@ -6,12 +6,45 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
 model User {
-  id String @id @default(uuid())
-  
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  clerkId String @unique
+  email   String @unique
+  name    String
+
+  entries JournalEntry[]
+}
+
+model JournalEntry {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  content String @db.Text
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  analysis Analysis?
+}
+
+model Analysis {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  entryId String       @unique
+  entry   JournalEntry @relation(fields: [entryId], references: [id])
+
+  summary   String  @db.Text
+  sentiment String
+  negative  Boolean
 }
