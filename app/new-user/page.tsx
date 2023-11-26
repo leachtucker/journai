@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 
-import { createNewUserAfterAuth } from '@/utils/user';
+import { createNewUserAfterAuth } from '@/utils/auth';
 import { sleep } from '@/utils/common';
 
 const Page = async () => {
