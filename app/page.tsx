@@ -9,8 +9,8 @@ export default async function Home() {
 		<div className="w-screen h-screen bg-black flex justify-center items-center text-white">
 			<div className="w-full max-w-[800px]">
 				<h1 className="text-6xl mb-4">Your AI-Powered Journal</h1>
-				<p className="text-2xl text-white/60 mb-8">
-					The best app for tracking your mood through out your life.
+				<p className="text-2xl text-white/60 mb-6">
+					The best app for tracking your mood throughout your life.
 					<br /> All you have to do is be honest.
 				</p>
 
