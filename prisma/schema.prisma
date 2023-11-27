@@ -31,10 +31,12 @@ model JournalEntry {
 
   content String @db.Text
 
-  userId String @unique
+  userId String
   user   User   @relation(fields: [userId], references: [id])
 
   analysis Analysis?
+
+  @@index([userId])
 }
 
 model Analysis {
