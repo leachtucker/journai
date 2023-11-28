@@ -1,6 +1,7 @@
 import { getJournalEntriesForCurrentUser } from '@/utils/entries';
 import Entry from '@/components/Entry';
 import NewEntry from '@/components/NewEntry';
+import Link from 'next/link';
 
 const Page = async () => {
 	const journalEntries = await getJournalEntriesForCurrentUser();
@@ -14,7 +15,9 @@ const Page = async () => {
 				<NewEntry />
 
 				{journalEntries.map((entry) => (
-					<Entry key={entry.id} entry={entry} />
+					<Link key={entry.id} href={`/journal/${entry.id}`}>
+						<Entry entry={entry} />
+					</Link>
 				))}
 			</div>
 		</div>
