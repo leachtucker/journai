@@ -3,3 +3,7 @@ export const sleep = async (wait: number) => {
 		setTimeout(() => resolve(''), wait);
 	});
 };
+
+export const getURLForPath = (path: string) => {
+	return `${window.location.origin}${path}`;
+};
