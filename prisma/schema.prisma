@@ -50,4 +50,5 @@ model Analysis {
   summary   String  @db.Text
   sentiment String
   negative  Boolean
+  color     String
 }
