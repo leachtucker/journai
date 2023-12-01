@@ -48,6 +48,7 @@ model Analysis {
   entry   JournalEntry @relation(fields: [entryId], references: [id])
 
   summary   String  @db.Text
+  subject   String
   sentiment String
   negative  Boolean
   color     String
