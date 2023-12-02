@@ -35,7 +35,7 @@ const Page = async ({ params }: PageProps) => {
 
 			<div className="col-span-1">
 				<div
-					className="px-6 py-10 border-b border-black/10"
+					className="px-6 py-10 border-b border-black/10 shadow-md"
 					style={{ backgroundColor: entryAnalysis?.color }}
 				>
 					<h2 className="text-xl">Analysis</h2>

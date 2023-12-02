@@ -14,18 +14,6 @@ export const PATCH = async (
 	const user = await getCurrentUser();
 	const body = (await request.json()) as EditEntryDto;
 
-	const analysis = await analyzeEntry(body.content);
-	await prisma.analysis.upsert({
-		where: {
-			entryId: params.id,
-		},
-		create: {
-			entryId: params.id,
-			...analysis,
-		},
-		update: analysis,
-	});
-
 	const entry = await prisma.journalEntry.update({
 		where: {
 			id: params.id,
@@ -34,10 +22,22 @@ export const PATCH = async (
 		data: {
 			content: body.content,
 		},
-		include: {
-			analysis: true,
-		},
 	});
+
+	const isEntryLongEnoughForAnalysis = body.content.split(' ').length > 4;
+	if (isEntryLongEnoughForAnalysis) {
+		const analysis = await analyzeEntry(body.content);
+		await prisma.analysis.upsert({
+			where: {
+				entryId: params.id,
+			},
+			create: {
+				entryId: params.id,
+				...analysis,
+			},
+			update: analysis,
+		});
+	}
 
 	// revalidate cache for pages with journal entries
 	revalidatePath('/journal');

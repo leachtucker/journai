@@ -4,7 +4,6 @@ import React from 'react';
 import { JournalEntry } from '@prisma/client';
 import { editEntry } from '@/api/entries.api';
 import useDebounce from './hooks/useDebounce';
-import Spinner from './Spinner';
 
 type EditorProps = { entry: JournalEntry };
 
