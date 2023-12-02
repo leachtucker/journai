@@ -1,10 +1,23 @@
 import Editor from '@/components/Editor';
 import { getEntryByIdForUser } from '@/utils/entries';
 
+import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
+
 type PageProps = { params: { id: string } };
 
 const Page = async ({ params }: PageProps) => {
 	const entry = await getEntryByIdForUser(params.id);
+	const entryAnalysis = entry?.analysis;
+
+	const analysisInfo = [
+		{ name: 'Subject', value: entryAnalysis?.subject },
+		{ name: 'Summary', value: entryAnalysis?.summary },
+		{ name: 'Mood', value: entryAnalysis?.sentiment },
+		{
+			name: 'Negative',
+			value: !entryAnalysis?.negative ? <FaThumbsUp /> : <FaThumbsDown />,
+		},
+	];
 
 	if (!entry) {
 		return (
@@ -21,7 +34,10 @@ const Page = async ({ params }: PageProps) => {
 			</div>
 
 			<div className="col-span-1">
-				<div className="bg-blue-300 px-6 py-10">
+				<div
+					className="px-6 py-10 border-b border-black/10"
+					style={{ backgroundColor: entryAnalysis?.color }}
+				>
 					<h2 className="text-xl">Analysis</h2>
 				</div>
 
@@ -33,7 +49,9 @@ const Page = async ({ params }: PageProps) => {
 								className="flex items-center justify-between px-2 py-4 border-b border-black/10"
 							>
 								<span className="text-lg">{item.name}</span>
-								<span>{item.value}</span>
+								<span className="max-w-[200px] text-right text-ellipsis overflow-hidden">
+									{item.value}
+								</span>
 							</li>
 						))}
 					</ul>
@@ -44,10 +62,3 @@ const Page = async ({ params }: PageProps) => {
 };
 
 export default Page;
-
-const analysisInfo = [
-	{ name: 'Subject', value: '' },
-	{ name: 'Summary', value: '' },
-	{ name: 'Mood', value: '' },
-	{ name: 'Negative', value: '' },
-];

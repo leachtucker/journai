@@ -22,7 +22,9 @@ const model = new OpenAI({
 const parser = StructuredOutputParser.fromZodSchema(
 	zod.object({
 		summary: zod.string().describe('a brief summary of the whole entry.'),
-		subject: zod.string().describe('the subject of the entry.'),
+		subject: zod
+			.string()
+			.describe('the subject of the entry in one to three words.'),
 		sentiment: zod.string().describe('the mood of the entry.'),
 		sentimentScore: zod
 			.number()

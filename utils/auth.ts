@@ -34,7 +34,7 @@ export const getUserByClerkId = async (clerkId: string) => {
 };
 
 export const getCurrentUser = async () => {
-	const currAuth = await auth();
+	const currAuth = auth();
 	const user = await getUserByClerkId(currAuth.userId!);
 
 	if (!user) {

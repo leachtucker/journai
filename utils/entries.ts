@@ -25,6 +25,9 @@ export const getEntryByIdForUser = async (id: string) => {
 		where: {
 			id,
 		},
+		include: {
+			analysis: true,
+		},
 	});
 
 	if (!entry) return null;

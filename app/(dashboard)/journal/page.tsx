@@ -5,7 +5,6 @@ import Link from 'next/link';
 
 const Page = async () => {
 	const journalEntries = await getJournalEntriesForCurrentUser();
-	console.log({ journalEntries });
 
 	return (
 		<div className="p-10">
