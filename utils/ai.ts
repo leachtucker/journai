@@ -7,8 +7,7 @@ import zod from 'zod';
 
 export const analyzeEntry = async (entry: string) => {
 	const analysis = await chain.invoke({
-		entry:
-			'Today, was my birthday. I spent time with my friends and family, which is great. Later in the day, I got errands done. I felt productive. It was all great until my cat ran away... still waiting to find him',
+		entry,
 		format_instructions: parser.getFormatInstructions(),
 	});
 
@@ -22,16 +21,30 @@ const model = new OpenAI({
 
 const parser = StructuredOutputParser.fromZodSchema(
 	zod.object({
-		summary: zod.string().describe('summary to the provided entry'),
-		sentiment: zod.string().describe('sentiment to the provided entry'),
-		negative: zod.boolean().describe('negative to the provided entry'),
-		color: zod.string().describe('color to the provided entry'),
+		summary: zod.string().describe('a brief summary of the whole entry.'),
+		subject: zod.string().describe('the subject of the entry.'),
+		sentiment: zod.string().describe('the mood of the entry.'),
+		sentimentScore: zod
+			.number()
+			.describe(
+				'mood of the entry rated on a scale from -10 to 10, where -10 is very negative and 10 is very positive.'
+			),
+		negative: zod
+			.boolean()
+			.describe(
+				'is the entry negative? (e.g. does it have mostly negative emotions?).'
+			),
+		color: zod
+			.string()
+			.describe(
+				'a hexidecimal color code that represents the mood of the entry.'
+			),
 	})
 );
 
 const chain = RunnableSequence.from([
 	PromptTemplate.fromTemplate(
-		'Analyze the provided journal entry by determining a brief summary, a sentiment, a color representing its sentiment, and whether or not it has a negative sentiment.\n{format_instructions}\n{entry}'
+		'Analyze the provided journal entry by determining a brief summary, a mood, a color representing its mood, and whether or not it has a negative sentiment.\n{format_instructions}\n{entry}'
 	),
 	model,
 	parser,
