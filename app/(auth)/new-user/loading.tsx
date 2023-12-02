@@ -1,4 +1,4 @@
-const Page = () => {
+const Loading = () => {
 	return (
 		<div className="w-screen h-screen bg-black text-white flex justify-center items-center flex-col">
 			<h2 className="text-5xl animate-pulse">Building...</h2>
@@ -9,4 +9,4 @@ const Page = () => {
 	);
 };
 
-export default Page;
+export default Loading;
