@@ -6,6 +6,11 @@ import { RunnableSequence } from 'langchain/schema/runnable';
 import zod from 'zod';
 
 export const analyzeEntry = async (entry: string) => {
+	const isEntryLongEnough = entry.split(' ').length > 4;
+	if (!isEntryLongEnough) {
+		throw new Error('Entry is too short for analysis');
+	}
+
 	const analysis = await chain.invoke({
 		entry,
 		format_instructions: parser.getFormatInstructions(),
