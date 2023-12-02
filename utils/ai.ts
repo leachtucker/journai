@@ -1,3 +1,4 @@
+import { MOOD_COLORS } from '@/resources/common';
 import { OpenAI } from 'langchain/llms/openai';
 import { StructuredOutputParser } from 'langchain/output_parsers';
 import { PromptTemplate } from 'langchain/prompts';
@@ -44,7 +45,9 @@ const parser = StructuredOutputParser.fromZodSchema(
 		color: zod
 			.string()
 			.describe(
-				'a hexidecimal color code that represents the mood of the entry.'
+				`a hexadecimal color which represents the mood of the entry. This color must be selected from the following list comma separated list:\n${MOOD_COLORS.join(
+					','
+				)}`
 			),
 	})
 );
