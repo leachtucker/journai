@@ -42,10 +42,8 @@ const parser = StructuredOutputParser.fromZodSchema(
 	})
 );
 
-const chain = RunnableSequence.from([
-	PromptTemplate.fromTemplate(
-		'Analyze the provided journal entry by determining a brief summary, a mood, a color representing its mood, and whether or not it has a negative sentiment.\n{format_instructions}\n{entry}'
-	),
-	model,
-	parser,
-]);
+const prompt = PromptTemplate.fromTemplate(
+	'Analyze the provided journal entry by determining a brief summary, a mood, a color representing its mood, and whether or not it has a negative sentiment.\n{format_instructions}\n{entry}'
+);
+
+const chain = RunnableSequence.from([prompt, model, parser]);
