@@ -3,17 +3,17 @@ import { Analysis } from '@prisma/client';
 import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 
 type AnalysisSummaryProps = {
-	analysis: Analysis;
+	analysis?: Analysis | null;
 };
 
 const AnalysisSummary = ({ analysis }: AnalysisSummaryProps) => {
 	const analysisInfo = [
-		{ name: 'Subject', value: analysis.subject },
-		{ name: 'Summary', value: analysis.summary },
-		{ name: 'Mood', value: analysis.sentiment },
+		{ name: 'Subject', value: analysis?.subject },
+		{ name: 'Summary', value: analysis?.summary },
+		{ name: 'Mood', value: analysis?.sentiment },
 		{
 			name: 'Negative',
-			value: !analysis.negative ? <FaThumbsUp /> : <FaThumbsDown />,
+			value: !analysis?.negative ? <FaThumbsUp /> : <FaThumbsDown />,
 		},
 	];
 

@@ -1,5 +1,6 @@
 import { JournalEntry } from '@prisma/client';
 import { getURLForPath } from '@/utils/common';
+import { JournalEntryWithAnalysis } from '@/utils/entries';
 
 export const createEntry = async ({ content }: { content: string }) => {
 	const url = getURLForPath('/api/entry');
@@ -38,5 +39,22 @@ export const editEntry = async ({
 		return null;
 	}
 
-	return (await res.json()).data as JournalEntry;
+	return (await res.json()).data as JournalEntryWithAnalysis;
+};
+
+export const getEntry = async ({ id }: { id: string }) => {
+	const url = getURLForPath(`/api/entry/${id}`);
+
+	const res = await fetch(new Request(url), {
+		method: 'GET',
+		next: {
+			tags: [id],
+		},
+	});
+
+	if (!res.ok) {
+		return null;
+	}
+
+	return (await res.json()).data as JournalEntryWithAnalysis;
 };

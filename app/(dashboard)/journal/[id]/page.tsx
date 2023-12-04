@@ -1,6 +1,5 @@
-import Editor from '@/components/Editor';
 import { getEntryByIdForUser } from '@/utils/entries';
-import AnalysisSummary from './AnalysisSummary';
+import EditEntryForm from './EditEntryForm';
 
 type PageProps = { params: { id: string } };
 
@@ -17,13 +16,7 @@ const Page = async ({ params }: PageProps) => {
 
 	return (
 		<div className="h-full w-full grid grid-cols-3">
-			<div className="col-span-2 border-r border-black/10">
-				<Editor entry={entry} />
-			</div>
-
-			<div className="col-span-1">
-				{entry.analysis && <AnalysisSummary analysis={entry.analysis} />}
-			</div>
+			<EditEntryForm entry={entry} />
 		</div>
 	);
 };

@@ -1,25 +1,30 @@
 'use client';
 
 import React from 'react';
-import { JournalEntry } from '@prisma/client';
-import { editEntry } from '@/api/entries.api';
 import useDebounce from './hooks/useDebounce';
+import { isPromise } from '@/utils/common';
 
-type EditorProps = { entry: JournalEntry };
+type EditorProps = {
+	initialValue: string;
+	onSave: (value: string) => Promise<any> | void;
+};
 
-const Editor = ({ entry }: EditorProps) => {
-	const [value, setValue] = React.useState(entry.content);
+const Editor = ({ initialValue, onSave }: EditorProps) => {
+	const [value, setValue] = React.useState(initialValue);
 	const [isSaving, setIsSaving] = React.useState(false);
 
-	const saveEntry = React.useCallback(() => {
+	const save = React.useCallback(() => {
 		setIsSaving(true);
 
-		editEntry({ id: entry.id, content: value }).finally(() =>
-			setIsSaving(false)
-		);
-	}, [entry.id, value]);
+		const req = onSave(value);
+		if (isPromise(req)) {
+			req.finally(() => setIsSaving(false));
+		} else {
+			setIsSaving(false);
+		}
+	}, [value, onSave]);
 
-	useDebounce({ value, wait: 1000, onWaitEnd: saveEntry });
+	useDebounce({ value, wait: 1000, onWaitEnd: save });
 
 	return (
 		<div className="w-full h-full relative overflow-hidden">

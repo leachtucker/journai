@@ -1,5 +1,6 @@
 import prisma from './db';
 import { getCurrentUser } from './auth';
+import { Prisma } from '@prisma/client';
 
 export const getJournalEntriesForCurrentUser = async () => {
 	const user = (await getCurrentUser())!;
@@ -39,3 +40,7 @@ export const getEntryByIdForUser = async (id: string) => {
 
 	return entry;
 };
+
+export type JournalEntryWithAnalysis = Prisma.JournalEntryGetPayload<{
+	include: { analysis: true };
+}>;
