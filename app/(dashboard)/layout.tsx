@@ -8,7 +8,7 @@ const Layout = ({ children }: LayoutProps) => {
 			<aside className="absolute w-[200px] top-0 left-0 h-full border-r border-black/10">
 				<nav>
 					<Link href="/">
-						<div className="py-4 flex justify-center bg-black">
+						<div className="h-[60px] flex justify-center items-center bg-black">
 							<h2 className="text-2xl font-semibold text-white">
 								Journ<span className="text-indigo-500 font-bold">AI</span>
 							</h2>
