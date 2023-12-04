@@ -30,17 +30,31 @@ export const PATCH = async (
 	let analysis: Analysis | null = null;
 	const isEntryLongEnoughForAnalysis = body.content.split(' ').length > 4;
 	if (isEntryLongEnoughForAnalysis) {
-		const newAnalysis = await analyzeEntry(body.content);
-		analysis = await prisma.analysis.upsert({
-			where: {
-				entryId: params.id,
-			},
-			create: {
-				entryId: params.id,
-				...newAnalysis,
-			},
-			update: newAnalysis,
-		});
+		try {
+			const newAnalysis = await analyzeEntry(body.content);
+			analysis = await prisma.analysis.upsert({
+				where: {
+					entryId: params.id,
+				},
+				create: {
+					entryId: params.id,
+					...newAnalysis,
+				},
+				update: newAnalysis,
+			});
+		} catch (e) {
+			return NextResponse.json(
+				{
+					error: {
+						message:
+							'An issue occurred while generating analysis for this entry',
+					},
+				},
+				{
+					status: 500,
+				}
+			);
+		}
 	}
 
 	// revalidate cache for pages with journal entries
