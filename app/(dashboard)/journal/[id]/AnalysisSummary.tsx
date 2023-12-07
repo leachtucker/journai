@@ -23,7 +23,7 @@ const AnalysisSummary = ({ analysis }: AnalysisSummaryProps) => {
 				className="px-6 py-10 border-b border-black/10 shadow-md"
 				style={{ backgroundColor: analysis?.color }}
 			>
-				<h2 className="text-xl">Analysis</h2>
+				<h2 className="text-xl font-medium text-white">Analysis</h2>
 			</div>
 
 			<div>
