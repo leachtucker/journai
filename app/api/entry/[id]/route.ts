@@ -1,4 +1,4 @@
-import { analyzeEntry } from '@/utils/ai';
+import { analyzeEntry } from '@/utils/ai/entry-analysis';
 import { getCurrentUser } from '@/utils/auth';
 import prisma from '@/utils/db';
 import { Analysis, JournalEntry } from '@prisma/client';
