@@ -1,4 +1,5 @@
 import { MOOD_COLORS } from '@/resources/common';
+import { JournalEntry } from '@prisma/client';
 import { OpenAI } from 'langchain/llms/openai';
 import { StructuredOutputParser } from 'langchain/output_parsers';
 import { PromptTemplate } from 'langchain/prompts';
