@@ -45,4 +45,7 @@ const Layout = ({ children }: LayoutProps) => {
 
 export default Layout;
 
-const links = [{ href: '/journal', label: 'Journal' }];
+const links = [
+	{ href: '/journal', label: 'Journal' },
+	{ href: '/history', label: 'History' },
+];
