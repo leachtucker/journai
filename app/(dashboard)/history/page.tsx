@@ -7,6 +7,7 @@ import SentimentChart from '@/components/SentimentChart';
 const Page = async () => {
 	const { sentiments, avg } = await getSentimentScores();
 
+	const hasSentiments = sentiments && sentiments.length > 0;
 	return (
 		<div className="p-10">
 			<h2 className="text-3xl mb-8">History</h2>
@@ -21,7 +22,11 @@ const Page = async () => {
 					</div>
 
 					<div className="h-full col-span-6 border-l">
-						<SentimentChart data={sentiments} />
+						{hasSentiments ? (
+							<SentimentChart data={sentiments} />
+						) : (
+							<NoDataChartPlaceholder />
+						)}
 					</div>
 				</div>
 			</div>
@@ -52,7 +57,18 @@ const getSentimentScores = async () => {
 	});
 
 	const scores = Ramda.map(Ramda.prop('sentimentScore'), sentiments);
-	const avg = Ramda.sum(scores) / scores.length;
+	const avg = scores.length > 0 ? Ramda.sum(scores) / scores.length : null;
 
 	return { sentiments, avg };
+};
+
+const NoDataChartPlaceholder = () => {
+	return (
+		<div className="h-full w-full bg-slate-200 flex items-center justify-center">
+			<span className="text-center animate-pulse">
+				A trend of your mood can be found here once you&apos;ve made some
+				entries in your journal
+			</span>
+		</div>
+	);
 };

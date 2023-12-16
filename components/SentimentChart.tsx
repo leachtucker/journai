@@ -47,7 +47,7 @@ const SentimentChart = ({ data }: SentimentChartProps) => {
 export default SentimentChart;
 
 const CustomTooltip = ({ payload, active }: TooltipProps<any, any>) => {
-	if (!active || !payload) {
+	if (!active || !payload || !payload[0]) {
 		return null;
 	}
 
