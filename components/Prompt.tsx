@@ -25,6 +25,11 @@ const Prompt = () => {
 		getAnswerEffect.run();
 	};
 
+	const isQuestionLongEnough = React.useMemo(
+		() => questionValue.split(' ').length > 2 && questionValue.length > 4,
+		[questionValue]
+	);
+
 	return (
 		<>
 			<form onSubmit={handleSubmit}>
@@ -43,8 +48,12 @@ const Prompt = () => {
 					/>
 					<button
 						type="submit"
-						className="bg-indigo-600 shadow-sm text-white px-4 py-2 rounded-r w-[100px] disabled:opacity-50 absolute top-0 right-0"
-						disabled={!questionValue || getAnswerEffect.isLoading}
+						className="bg-indigo-600 text-white px-4 py-2 rounded-r w-[100px] disabled:opacity-50 absolute top-0 right-0"
+						disabled={
+							!questionValue ||
+							getAnswerEffect.isLoading ||
+							!isQuestionLongEnough
+						}
 					>
 						Enter
 					</button>

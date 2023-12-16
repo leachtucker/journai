@@ -25,7 +25,22 @@ const questionPrompt = new PromptTemplate({
 	template: questionPromptTemplateString,
 });
 
-const chain = loadQARefineChain(model, { questionPrompt });
+const refinePromptTemplateString = `The original question is as follows: {question}
+We have provided an existing answer: {existing_answer}
+We have the opportunity to refine the existing answer
+(only if needed) with some more context below.
+------------
+{context}
+------------
+Given the new context, refine the original answer to better answer the question.
+You must provide a response which is either the original answer or refined answer.`;
+
+const refinePrompt = new PromptTemplate({
+	inputVariables: ['question', 'existing_answer', 'context'],
+	template: refinePromptTemplateString,
+});
+
+const chain = loadQARefineChain(model, { questionPrompt, refinePrompt });
 
 export const askQuestionAgainstEntries = async (
 	question: string,
