@@ -19,8 +19,8 @@ const NewEntry = () => {
 			className="cursor-pointer overflow-hidden rounded-lg bg-white shadow-md"
 			onClick={handleClick}
 		>
-			<div className="px-4 py-5 sm:p-6">
-				<span className="text-xl">New Entry</span>
+			<div className="flex justify-center items-center h-full">
+				<span className="text-xl">Create a New Entry</span>
 			</div>
 		</div>
 	);
