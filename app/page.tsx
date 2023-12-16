@@ -15,7 +15,7 @@ export default async function Home() {
 				</p>
 
 				<div>
-					<Link href={ctaHref}>
+					<Link href={ctaHref} data-testId="ctaLink">
 						<button className="bg-indigo-500 px-4 py-2 rounded-lg text-xl">
 							Get Started
 						</button>
