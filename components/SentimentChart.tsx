@@ -2,8 +2,6 @@
 
 import React from 'react';
 
-import Color from 'color';
-
 import {
 	Line,
 	LineChart,
@@ -37,7 +35,7 @@ const SentimentChart = ({ data }: SentimentChartProps) => {
 					strokeWidth={2}
 					activeDot={{ r: 8 }}
 				/>
-				<YAxis dataKey="sentimentScore" />
+				<YAxis dataKey="sentimentScore" label="Mood" hide />
 				<XAxis dataKey="createdAt" label="Date" hide />
 				<Tooltip content={CustomTooltip} />
 				<ReferenceLine y={0} strokeDasharray="3 3" />
@@ -58,7 +56,7 @@ const CustomTooltip = ({ payload, active }: TooltipProps<any, any>) => {
 
 	return (
 		<div
-			className="p-4 custom-tooltip bg-white/5 shadow-md border border-black/10 rounded-lg backdrop-blur-md relative"
+			className="p-4 bg-white/5 shadow-md border border-black/10 rounded-lg backdrop-blur-md relative"
 			style={{
 				backgroundColor: sentiment.color,
 			}}

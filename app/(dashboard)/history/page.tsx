@@ -7,14 +7,23 @@ import SentimentChart from '@/components/SentimentChart';
 const Page = async () => {
 	const { sentiments, avg } = await getSentimentScores();
 
-	console.log({ sentiments });
-
 	return (
 		<div className="p-10">
 			<h2 className="text-3xl mb-8">History</h2>
 
-			<div className="w-full h-[500px]">
-				<SentimentChart data={sentiments} />
+			<div className="w-full h-[500px] rounded-md shadow-md ">
+				<div className="grid grid-cols-7 h-full">
+					<div className="col-span-1">
+						<div className="w-full p-2 py-4 border-b flex justify-around items-center">
+							<span className="text-lg ">Avg. Mood:</span>
+							<span>{avg}</span>
+						</div>
+					</div>
+
+					<div className="h-full col-span-6 border-l">
+						<SentimentChart data={sentiments} />
+					</div>
+				</div>
 			</div>
 		</div>
 	);
