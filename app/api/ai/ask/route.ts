@@ -1,7 +1,8 @@
+import { NextRequest, NextResponse } from 'next/server';
+
 import { askQuestionAgainstEntries } from '@/utils/ai/question-answers';
 import { getCurrentUser } from '@/utils/auth';
 import prisma from '@/utils/db';
-import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (request: NextRequest) => {
 	const user = await getCurrentUser();
@@ -25,5 +26,6 @@ export const GET = async (request: NextRequest) => {
 	}
 
 	const answer = await askQuestionAgainstEntries(question, entriesForUser);
+
 	return NextResponse.json({ data: answer });
 };

@@ -6,9 +6,6 @@ import { MemoryVectorStore } from 'langchain/vectorstores/memory';
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
 import { PromptTemplate } from 'langchain/prompts';
 
-const model = new OpenAI({ temperature: 0, modelName: 'gpt-3.5-turbo' });
-const embeddings = new OpenAIEmbeddings();
-
 const questionPromptTemplateString = `Context information is below. 
 -------------------------
 {context}
@@ -40,12 +37,15 @@ const refinePrompt = new PromptTemplate({
 	template: refinePromptTemplateString,
 });
 
-const chain = loadQARefineChain(model, { questionPrompt, refinePrompt });
-
 export const askQuestionAgainstEntries = async (
 	question: string,
 	entries: Pick<JournalEntry, 'content' | 'createdAt' | 'id'>[]
 ) => {
+	const model = new OpenAI({ temperature: 0, modelName: 'gpt-3.5-turbo' });
+	const embeddings = new OpenAIEmbeddings();
+	const chain = loadQARefineChain(model, { questionPrompt, refinePrompt });
+
+	// setup llm docs and embeddings
 	const documents = entries.map(
 		(entry) =>
 			new Document({
@@ -62,8 +62,8 @@ export const askQuestionAgainstEntries = async (
 		embeddings
 	);
 
-	const relatedDocuments = await vectorStore.similaritySearch(question, 5);
-
+	// find related documents, then refine the output based on those docs
+	const relatedDocuments = await vectorStore.similaritySearch(question, 2);
 	const response = await chain.call({
 		input_documents: relatedDocuments,
 		question,
